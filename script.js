@@ -10,6 +10,22 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
     });
+
+    // Hero section slideshow
+    const heroSection = document.getElementById('heroSection');
+    const heroImages = [
+        'images/hero_image_1.jpg',
+        'images/hero_image_2.jpg'
+    ];
+    let currentImageIndex = 0;
+
+    function changeHeroBackground() {
+        currentImageIndex = (currentImageIndex + 1) % heroImages.length;
+        heroSection.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('${heroImages[currentImageIndex]}')`;
+    }
+
+    // Change background every 4 seconds
+    setInterval(changeHeroBackground, 4000);
 });
 
 function sendToWhatsapp(e) {
