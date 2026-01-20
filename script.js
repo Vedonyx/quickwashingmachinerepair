@@ -41,6 +41,6 @@ function sendToWhatsapp(e) {
     const message = `*New Service Request*%0A%0A*Name:* ${name}%0A*Phone:* ${phone}%0A*Problem:* ${problem}`;
 
     // Open WhatsApp
-    const whatsappUrl = `https://wa.me/919035853700?text=${message}`;
+    const whatsappUrl = `https://wa.me/918151878009?text=${message}`;
     window.open(whatsappUrl, '_blank');
 }
