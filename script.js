@@ -1,46 +1,53 @@
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('Quick Washing Machine Repair site loaded.');
+    console.log('Appliance Repair site loaded.');
 
     // Smooth scrolling for anchor links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
             e.preventDefault();
-            document.querySelector(this.getAttribute('href')).scrollIntoView({
-                behavior: 'smooth'
-            });
+            const target = document.querySelector(this.getAttribute('href'));
+            if(target) {
+                target.scrollIntoView({
+                    behavior: 'smooth'
+                });
+            }
         });
     });
 
-    // Hero section slideshow
-    const heroSection = document.getElementById('heroSection');
-    const heroImages = [
-        'images/hero_image_1.jpg',
-        'images/hero_image_2.jpg'
-    ];
-    let currentImageIndex = 0;
-
-    function changeHeroBackground() {
-        currentImageIndex = (currentImageIndex + 1) % heroImages.length;
-        heroSection.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('${heroImages[currentImageIndex]}')`;
-    }
-
-    // Change background every 4 seconds
-    setInterval(changeHeroBackground, 4000);
+    // Handle Enquiry Form Submit
+    const forms = document.querySelectorAll('.enquiry-form');
+    forms.forEach(form => {
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            sendToWhatsapp(e);
+        });
+    });
 });
 
 function sendToWhatsapp(e) {
-    e.preventDefault();
     const form = e.target;
 
-    // Get values
-    const name = form.querySelector('input[type="text"]').value;
-    const phone = form.querySelector('input[type="tel"]').value;
-    const problem = form.querySelector('textarea').value;
+    // Get values from the form
+    const name = form.querySelector('input[name="name"]')?.value || '';
+    const phone = form.querySelector('input[name="phone"]')?.value || '';
+    const product = form.querySelector('select[name="product"]')?.value || '';
+    
+    // Warranty radio button (checked)
+    const warrantyEl = form.querySelector('input[name="warranty"]:checked');
+    const warranty = warrantyEl ? warrantyEl.value : '';
+
+    const email = form.querySelector('input[name="email"]')?.value || '';
+    const address = form.querySelector('input[name="address"]')?.value || '';
+    const pincode = form.querySelector('input[name="pincode"]')?.value || '';
+    const problem = form.querySelector('textarea[name="problem"]')?.value || '';
 
     // Construct WhatsApp Message
-    const message = `*New Service Request*%0A%0A*Name:* ${name}%0A*Phone:* ${phone}%0A*Problem:* ${problem}`;
+    const message = `*New Service Request*%0A%0A*Name:* ${name}%0A*Phone:* ${phone}%0A*Product:* ${product}%0A*Warranty:* ${warranty}%0A*Email:* ${email}%0A*Address:* ${address}%0A*Pincode:* ${pincode}%0A*Problem:* ${problem}`;
 
     // Open WhatsApp
-    const whatsappUrl = `https://wa.me/918151878009?text=${message}`;
+    const whatsappUrl = `https://wa.me/919035853700?text=${message}`;
     window.open(whatsappUrl, '_blank');
+    
+    // Reset form
+    form.reset();
 }
